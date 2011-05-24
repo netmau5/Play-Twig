@@ -1,6 +1,6 @@
 h1. Twig Persistence
 
-Twig Persistence is a typesafe, DSL-based persistence framework for the Google App Engine datastore. Twig pleasantly batch operations, in-memory joins, and asynchronous queries, allowing the developer side-step some of the annoying work associated with working with the datastore.
+Twig Persistence is a typesafe, DSL-based persistence framework for the Google App Engine datastore. Twig pleasantly combines batch operations, in-memory joins, and asynchronous queries, allowing the developer to side-step some of the annoying work associated with working with the datastore.
 
 This module uses the Twig 2.0-beta3 release which I have put to use in a production GAE application with little trouble. There are still some obscure bugs that you may stumble across. This documentation provides a quick overview of the module. For more information, please go to the <a href="http://code.google.com/p/twig-persist/">Twig homepage</a>.
 
