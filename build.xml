@@ -13,7 +13,7 @@
         <fileset dir="lib">
             <include name="*.jar"/>
         </fileset>
-        <fileset dir="${play.path}/modules/gae-1.1/lib">
+        <fileset dir="${play.path}/modules/gae-1.4/lib">
             <include name="*.jar"/>
         </fileset>
     </path>

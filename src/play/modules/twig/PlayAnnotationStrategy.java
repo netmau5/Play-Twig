@@ -15,8 +15,8 @@ import play.Play;
  */
 public class PlayAnnotationStrategy extends AnnotationConfiguration {
 
-  public PlayAnnotationStrategy(boolean b, int i) {
-    super(b, i);
+  public PlayAnnotationStrategy(boolean indexPropertiesDefault, int defaultVersion) {
+    super(indexPropertiesDefault, defaultVersion);
   }
 
   @Override

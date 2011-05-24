@@ -7,11 +7,11 @@ import com.google.code.twig.conversion.CombinedConverter;
 import com.google.code.twig.PropertyTranslator;
 import com.google.code.twig.ObjectDatastore;
 import com.google.code.twig.util.generic.GenericTypeReflector;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Maps;
 
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.lang.reflect.Field;
 
 /**
@@ -35,9 +35,9 @@ public class PlayDatastore extends StandardObjectDatastore {
     private final Map<Class, PropertyTranslator> translators;
 
     private Builder() {
-      typeConverters = Sets.newHashSet();
-      specificConverters = Sets.newHashSet();
-      translators = Maps.newHashMap();
+      typeConverters = new HashSet();
+      specificConverters = new HashSet();
+      translators = new HashMap();
     }
 
     public Builder addConverter(final TypeConverter typeConverter) {
@@ -52,6 +52,11 @@ public class PlayDatastore extends StandardObjectDatastore {
 
     public Builder addTranslator(final Class type, final PropertyTranslator translator) {
       translators.put(type, translator);
+      return this;
+    }
+
+    public Builder addTranslator(final TwigPropertyTranslator translator) {
+      translators.put(translator.getTranslatorClass(), translator);
       return this;
     }
 

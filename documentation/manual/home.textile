@@ -1,0 +1,52 @@
+h1. Twig Persistence
+
+The Twig Persistence framework is a typesafe, DSL-based persistence framework for the Google App Engine datastore. Twig pleasantly batch operations, in-memory joins, and asynchronous queries, allowing the developer side-step some of the annoying work associated with working with the datastore.
+
+This module uses the Twig 2.0-beta3 release which I have put to use in a production GAE application with little trouble. There are still some obscure bugs that you may stumble across. This documentation provides a quick overview of the module. For more information, please go to the <a href="http://code.google.com/p/twig-persist/">Twig homepage</a>.
+
+p(note). **Note** Twig has a dependency on the Google Collections/Guava library.
+
+h2. <a name="usage">Using the Twig module</a>
+
+This module comes with a static helper class called Datastore. This class exposes the core persistence API and is refreshed with a new ObjectDatastore instance on each request. Twig internally caches datastore instances to improve performance, especially with in-memory joins. For this reason, it is dangerous to share the same instance of ObjectDatastore between requests.
+
+p(note). **Note** If you use a dependency injection framework such as Guice, do not inject the ObjectDatastore instance directly. You should inject an instance of Provider that will read the correct ObjectDatastore from Datastore.getInstance() or by creating your own.
+
+h2. <a name="Models">Models</a>
+
+Setting up a domain model using Twig is remarkably easy. This module uses Twig's annotation approach out of the box. The only required configuration is the @Id annotation which should decorate a String or Long acting as the primary key of your model. For more configuration options, please go to the <a href="http://code.google.com/p/twig-persist/">Twig homepage</a>.
+
+h2. <a name="Querying">Querying</a>
+
+h3. <a name="Find">Find</a>
+
+Twig queries are begun by invoking Datastore.find() and ending with a termination command followed by a lookup directive. The termination command defines what your query will return: all instances, a count, unique instances, etc. The lookup directive defines when your query will be executed: either now, immediately returning results, or later, returning a Java Future object and running the query asynchronously.
+
+bc. List<Comment> comments = Datastore.find().type(Comment.class).returnAll().now();
+Future<List<Comment>> comments = Datastore.find().type(Comment.class).returnAll().later();
+
+h3. <a name="Get">Get</a>
+
+Twig allows for gets and batch gets via the load method taking a String key, long id, or collection of either.
+
+bc. Comment comment = Datastore.load(Cosmment.class, id);
+Map<Long, Comment> comments = Datastore.load(Comment.class, Lists.newArrayList(1L, 2L, 3L));
+
+h3. <a name="Store">Store</a>
+
+Storing objects can be done with either a single instance or collection. There are two mechanisms for saving to the datastore: store and update. The former is reserved for completely new instances whereas the later signals your intent that a model already exists in the datastore.
+
+Models are cached in Twig when read through the same ObjectDatastore instance. Twig will not recognize a model is not in the datastore when you call update on one that you didn't first load. To update Twig's cache, you should call Datastore.associate on this instance. You will often need to do this on instances that have been serialized or been reconstructed for a request.
+
+bc. Datastore.store(myComment);
+Datastore.associated(editedComment);
+Datastore.update(editedComment);
+
+h3. <a name="Transactions">Transactions</a>
+
+Twig supports datastore transactions via the beginTransaction method. All of the normal transactional datastore rules still apply, notably that you should only be modifying records in a single entity group.
+
+bc. Transaction transaction = Datastore.beginTransaction();
+...
+transaction.commit();
+
