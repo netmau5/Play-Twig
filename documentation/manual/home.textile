@@ -6,6 +6,8 @@ This module uses the Twig 2.0-beta3 release which I have put to use in a product
 
 p(note). **Note** Twig has a dependency on the Google Collections/Guava library.
 
+Source code and issue tracking is available at <a href="https://github.com/netmau5/Play-Twig">GitHub Play-Twig</a>.
+
 h2. <a name="usage">Using the Twig module</a>
 
 This module comes with a static helper class called Datastore. This class exposes the core persistence API and is refreshed with a new ObjectDatastore instance on each request. Twig internally caches datastore instances to improve performance, especially with in-memory joins. For this reason, it is dangerous to share the same instance of ObjectDatastore between requests.
