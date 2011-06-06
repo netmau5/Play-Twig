@@ -6,6 +6,8 @@ This module uses the Twig 2.0-beta3 release which I have put to use in a product
 
 p(note). **Note** Twig has a dependency on the Google Collections/Guava library.
 
+p(note). **Note** This module does not yet support fixtures.
+
 Source code and issue tracking is available at <a href="https://github.com/netmau5/Play-Twig">GitHub Play-Twig</a>.
 
 h2. <a name="usage">Using the Twig module</a>
