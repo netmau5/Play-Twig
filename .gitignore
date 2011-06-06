@@ -6,5 +6,6 @@ tmp/
 precompiled/
 logs/
 out/
+dist/
 .svn/
 war/WEB-INF/appengine-generated/
